@@ -1,0 +1,10 @@
+.btn-task {
+  background-color: $purple;
+  border: 1px solid black
+}
+
+.btn-task:hover {
+  background-color: $dark-purple;
+  color: white;
+  border: 1px solid black
+}

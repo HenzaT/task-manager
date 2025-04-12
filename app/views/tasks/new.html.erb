@@ -1,0 +1,9 @@
+<div class="container new-page">
+  <%= simple_form_for @task do |f| %>
+  <%= f.input :title %>
+  <%= f.input :description %>
+  <%= f.input :status, collection: ["Completed", "In Progress", "Not Started"] %>
+  <%= f.input :due %>
+  <%= f.button :submit %>
+<% end %>
+</div>

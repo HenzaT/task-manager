@@ -1,0 +1,27 @@
+<%= render "banner" %>
+
+<div class="container home-page">
+  <div class="row">
+    <div class="col-5">
+      <div class="task-cards">
+        <% @tasks.each do |task| %>
+          <%= link_to task_path(task), class: "text-decoration-none" do %>
+            <div class="card task-card">
+              <span class="task-name">
+                <%= task.title %>
+              </span>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <%= turbo_frame_tag :individual_task do %>
+      <div class="col-7">
+      </div>
+    <% end %>
+  </div>
+
+  <div class="new-button">
+    <%= link_to "new task", new_task_path, class: "btn btn-task" %>
+  </div>
+</div>
