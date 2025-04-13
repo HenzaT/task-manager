@@ -1,1 +1,12 @@
-Rails app generated with [lewagon/rails-templates](https://github.com/lewagon/rails-templates), created by the [Le Wagon coding bootcamp](https://www.lewagon.com) team.
+taskr (Task Manager)
+
+Ongoing project to showcase a task manager with simple CRUD functionality. I intend to implement Turbo and JavaScript for a user-friendly experience, as well as integrating OpenAI API. 
+
+Stack:
+> - Ruby on Rails
+> - HTML
+> - SCSS
+> - Bootstrap
+> - JavaScript
+> - Stimulus.JS
+> - Turbo
