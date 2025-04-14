@@ -1,0 +1,18 @@
+<%= turbo_frame_tag :modal_task_form do %>
+  <%= simple_form_for task do |f| %>
+    <div class="modal-header">
+      <h5 class="modal-title">Edit Task</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <%= f.input :title %>
+      <%= f.input :description %>
+      <%= f.input :status, collection: ["Completed", "In Progress", "Not Started"] %>
+      <%= f.input :due, input_html: { data: { controller: "datepicker" } } %>
+    </div>
+    <div class="modal-footer">
+      <%= f.button :submit, class: "btn btn-task" %>
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    </div>
+  <% end %>
+<% end %>

@@ -1,11 +1,11 @@
 <%= turbo_frame_tag :individual_task do %>
-  <div class="container new-page">
-      <%= simple_form_for @task do |f| %>
-        <%= f.input :title %>
-        <%= f.input :description %>
-        <%= f.input :status, collection: ["Completed", "In Progress", "Not Started"] %>
-        <%= f.input :due, input_html: { data: { controller: "datepicker" } } %>
-        <%= f.button :submit %>
-      <% end %>
+  <div class="container new-page text-center">
+    <%= simple_form_for @task do |f| %>
+      <%= f.input :title %>
+      <%= f.input :description %>
+      <%= f.input :status, collection: ["Completed", "In Progress", "Not Started"] %>
+      <%= f.input :due, input_html: { data: { controller: "datepicker" } } %>
+      <%= f.button :submit, class: "btn btn-task" %>
+    <% end %>
   </div>
 <% end %>

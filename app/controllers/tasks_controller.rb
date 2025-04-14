@@ -1,6 +1,5 @@
 class TasksController < ApplicationController
   def index
-    # @tasks = Task.all
     @q = Task.ransack(params[:q])
     @tasks = @q.result(distinct: true)
   end
@@ -20,6 +19,26 @@ class TasksController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def edit
+    @task = Task.find(params[:id])
+    respond_to do |format|
+      format.turbo_stream { render partial: "form", locals: { task: @task } }
+      format.html { render partial: "form", locals: { task: @task } }
+    end
+  end
+
+  def update
+    @task = Task.find(params[:id])
+    @task.update(task_params)
+    # redirect_to root_path
+  end
+
+  def destroy
+    @task = Task.find(params[:id])
+    @task.destroy
+    redirect_to root_path, status: :see_other
   end
 
   private
