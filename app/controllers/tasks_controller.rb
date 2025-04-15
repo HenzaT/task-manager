@@ -15,7 +15,10 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if @task.save
-      redirect_to root_path
+      respond_to do |format|
+        format.html { redirect_to root_path }
+        format.turbo_stream
+      end
     else
       render :new, status: :unprocessable_entity
     end
@@ -23,16 +26,12 @@ class TasksController < ApplicationController
 
   def edit
     @task = Task.find(params[:id])
-    respond_to do |format|
-      format.turbo_stream { render partial: "form", locals: { task: @task } }
-      format.html { render partial: "form", locals: { task: @task } }
-    end
   end
 
   def update
     @task = Task.find(params[:id])
     @task.update(task_params)
-    # redirect_to root_path
+    redirect_to root_path
   end
 
   def destroy

@@ -2,19 +2,21 @@
 
 <div class="container home-page">
   <div class="row">
-    <div class="col-5 sort-by text-center">
+    <div class="col-4 sort-by text-center border-end border-dark">
       <%= search_form_for @q do |f| %>
         <%= f.label :title_cont %>
         <%= f.search_field :title_cont %>
         <%= f.submit %>
       <% end %>
-      <%= sort_link(@q, :title) %>
-      <%= sort_link(@q, :status) %>
-      <%= sort_link(@q, :due) %>
+      <div class="sorting-buttons">
+        <%= sort_link(@q, :title) %>
+        <%= sort_link(@q, :status) %>
+        <%= sort_link(@q, :due) %>
+      </div>
     </div>
   </div>
   <div class="row">
-    <div class="col-5 all-tasks border-end border-dark">
+    <div class="col-4 all-tasks border-end border-dark">
       <div class="task-cards">
         <% @tasks.each do |task| %>
           <div class="card task-card">
@@ -24,34 +26,42 @@
             <span class="due-date">
               <%= task.due.strftime('%b %e, %Y') %>
             </span>
-            <%= link_to edit_task_path(task) do %>
-              <%= turbo_frame_tag :modal_task_form do %>
-                <i class="fa-solid fa-pen-to-square"></i>
-              <% end %>
-            <% end %>
-            <%= link_to task_path(task), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} do %>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal">
+              update
+            </button>
+            <i class="fa-solid fa-pen-to-square"></i>
+            <%= link_to task_path(task), class: "text-dark", data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} do %>
               <i class="fa-solid fa-trash"></i>
             <% end %>
           </div>
         <% end %>
       </div>
     </div>
-    <div class="col-7 new-task">
-      <%= turbo_frame_tag :individual_task do %>
-        <div class="new-button">
-          <%= link_to "new task", new_task_path, class: "btn btn-task btn-lg" %>
-        </div>
-      <% end %>
+    <div class="col-4">
+      <div class="new-task">
+        <%= turbo_frame_tag :individual_task do %>
+          <div class="new-button">
+            <%= link_to "new task", new_task_path, class: "btn btn-task btn-lg" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="new-ai-task">
+        <button type="button" class="btn btn-primary">
+          Update Task
+        </button>
+      </div>
     </div>
   </div>
 </div>
 
 <%# edit task modal %>
-<div class="modal fade" id="editTaskModal" tabindex="-1" aria-labelledby="editTaskModal" aria-hidden="true">
+<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <%= turbo_frame_tag :modal_task_form do %>
-        <div class="p-3 text-muted">Loading form...</div>
+      
       <% end %>
     </div>
   </div>
