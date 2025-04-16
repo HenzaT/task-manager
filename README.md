@@ -10,3 +10,6 @@ Stack:
 > - JavaScript
 > - Stimulus.JS
 > - Turbo
+> - OpenAI API
+> - Cloudinary
+> - Heroku
