@@ -2,59 +2,48 @@
 
 <div class="container home-page">
   <div class="row">
-    <div class="col-4 sort-by text-center border-end border-dark">
-      <%= search_form_for @q do |f| %>
-        <%= f.label :title_cont %>
-        <%= f.search_field :title_cont %>
-        <%= f.submit %>
-      <% end %>
-      <div class="sorting-buttons">
-        <%= sort_link(@q, :title) %>
-        <%= sort_link(@q, :status) %>
-        <%= sort_link(@q, :due) %>
+    <%# <div class="col-4 sort-by justify-content-center text-center"> %>
+      <%#= search_form_for @q do |f| %>
+        <%#= f.label :title_cont %>
+        <%#= f.search_field :title_cont, class: "form-control" %>
+        <%#= link_to "Clear", request.path, class: "btn btn-default" %>
+        <%#= f.submit %>
+      <%# end %>
+      <%# <div class="sorting-buttons">
+      <button class="btn-sort"> %>
+        <%#= sort_link(@q, :title) %>
+      <%# </button>
+      <button class="btn-sort"> %>
+        <%#= sort_link(@q, :due) %>
+      <%# </button>
       </div>
-    </div>
+    </div> %>
   </div>
   <div class="row">
     <div class="col-4 all-tasks border-end border-dark">
-      <div class="task-cards">
+      <div id="tasks" class="task-cards">
+        <h2>Tasks in progress...</h2>
+        <%= turbo_stream_from "tasks" %>
         <% if @tasks.length > 0 %>
           <% @tasks.each do |task| %>
-            <div class="card task-card">
-              <span class="task-name">
-                <%= task.title %>
-              </span>
-              <span class="due-date">
-                <%= task.due.strftime('%b %e, %Y') %>
-              </span>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal">
-                update
-              </button>
-              <%= cl_image_tag task.photo.key, alt: "AI-generated image of the task" if task.photo.attached? %>
-              <i class="fa-solid fa-pen-to-square"></i>
-              <%= link_to task_path(task), class: "text-dark", data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} do %>
-                <i class="fa-solid fa-trash"></i>
-              <% end %>
-              <%# edit task modal %>
-              <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <%= turbo_frame_tag :modal_task_form do %>
-                      <%= render "form", task: task %>
-                    <% end %>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <%= render "task", task: task %>
           <% end %>
         <% else %>
-          <div>
+          <div class="text-center">
             <h2>add a task...</h2>
           </div>
         <% end %>
       </div>
     </div>
-    <div class="col-8">
+    <div class="col-4 completed-tasks border-end border-dark">
+      <div class="task-cards">
+        <h2>Completed tasks...</h2>
+        <% @completed.each do |done| %>
+          <%= render "task", task: done %>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-4">
       <div class="new-task">
         <%= turbo_frame_tag :individual_task do %>
           <div class="new-button">

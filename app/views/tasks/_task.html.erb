@@ -1,0 +1,43 @@
+<div id="<%= dom_id(task) %>" class="card task-card" data-card-toggle-target="card">
+  <div class="card-front">
+    <%= cl_image_tag task.photo.key, class: "card-img", alt: "AI-generated image of the task" if task.photo.attached? %>
+    <div class="card-img-overlay">
+      <div class="card-icons">
+        <i class=" fa-solid fa-pen-to-square" data-bs-toggle="modal" data-bs-target="#updateModal-<%= task.id %>"></i>
+        <%= link_to task_path(task), class: "text-dark", data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} do %>
+          <i class="fa-solid fa-trash"></i>
+        <% end %>
+      </div>
+      <div class="card-right">
+        <span class="due-date">
+          Due: <%= task.due.strftime('%b %e, %Y') %>
+          <%= form_with url: toggle_status_task_path(task), method: :patch, data: { turbo: true } do |f| %>
+            <%= f.check_box :status,
+                  {
+                    checked: task.status == 'Completed',
+                    onchange: 'this.form.submit();',
+                    data: { action: "click->card-toggle#toggleColor" }
+                  },
+                    "Completed",
+                    "In Progress" %>
+            <%= f.label :status, "Completed" %>
+          <% end %>
+        </span>
+        <span class="task-name">
+          <h2 id="title"><%= task.title.titleize %></h2>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <%# edit task modal %>
+  <div class="modal fade" id="updateModal-<%= task.id %>" tabindex="-1" aria-labelledby="updateModalLabel-<%= task.id %>" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <%= turbo_frame_tag "modal_task_form_#{task.id}" do %>
+          <%= render "form", task: task %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

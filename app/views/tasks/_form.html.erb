@@ -7,7 +7,7 @@
     <div class="modal-body">
       <%= f.input :title %>
       <%= f.input :description %>
-      <%= f.input :status, collection: ["Completed", "In Progress", "Not Started"] %>
+      <%= f.input :status, collection: ["Completed", "In Progress"] %>
       <%= f.input :due, input_html: { data: { controller: "datepicker" } } %>
     </div>
     <div class="modal-footer">

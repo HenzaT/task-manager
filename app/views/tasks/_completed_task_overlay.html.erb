@@ -1,0 +1,15 @@
+<div class="card task-card">
+  <div class="card-front">
+    <%= cl_image_tag task.photo.key, class: "card-img", alt: "AI-generated image of the task" if task.photo.attached? %>
+    <div class="card-img-overlay">
+      <div class="card-right">
+        <span class="due-date">
+          <%= task.due.strftime('%b %e, %Y') %>
+        </span>
+        <span class="task-name">
+          <h2 id="title"><%= task.title %></h2>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

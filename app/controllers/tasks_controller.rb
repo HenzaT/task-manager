@@ -1,7 +1,9 @@
 class TasksController < ApplicationController
   def index
-    @q = Task.ransack(params[:q])
-    @tasks = @q.result(distinct: true)
+    # @q = Task.ransack(params[:q])
+    # @tasks = @q.result(distinct: true)
+    @tasks = Task.where(status: "In Progress")
+    @completed = Task.where(status: "Completed")
   end
 
   def show
@@ -15,9 +17,11 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if @task.save
+      Turbo::StreamsChannel.broadcast_append_to "tasks", target: "tasks", html: render_to_string(partial: "task", locals: { task: @task })
+
       respond_to do |format|
-        format.html { redirect_to root_path }
         format.turbo_stream
+        format.html { redirect_to tasks_path, notice: "Task was successfully created." }
       end
     else
       render :new, status: :unprocessable_entity
@@ -32,6 +36,15 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     @task.update(task_params)
     redirect_to root_path
+  end
+
+  def toggle_status
+    @task = Task.find(params[:id])
+    @task.update(status: params[:status])
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to tasks_path, notice: 'Task updated.' }
+    end
   end
 
   def destroy

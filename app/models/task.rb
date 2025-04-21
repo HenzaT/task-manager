@@ -10,21 +10,15 @@ class Task < ApplicationRecord
   end
   has_one_attached :photo
   validates :title, :status, :due, presence: true
-  validates :status, inclusion: { in: ["Completed", "In Progress", "Not Started"] }
+  validates :status, inclusion: { in: ["Completed", "In Progress"] }
+
+  after_update_commit -> { broadcast_replace_later_to "tasks" }
+
+  # after_create_commit -> { broadcast_prepend_to "tasks", partial: "tasks/task", locals: { quote: self }, target: "tasks" }
 
   private
 
   def set_photo
-    client = OpenAI::Client.new
-    response = client.images.generate(parameters: {
-      prompt: "An image of #{title} or #{description}", size: "256x256"
-    })
-
-    url = response["data"][0]["url"]
-    file = URI.parse(url).open
-
-    photo.purge if photo.attached?
-    photo.attach(io: file, filename: "ai_generated_image.jpg", content_type: "image/png")
-    return photo
+    TaskPhotoJob.perform_later(self.id)
   end
 end

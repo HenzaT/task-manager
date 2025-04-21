@@ -4,14 +4,61 @@
   margin: auto;
 
   .task-card {
-    padding: 40px 20px 40px 20px;
-    margin: 10px;
+    margin: 20px;
+    border-radius: 20px;
     display: flex;
-    // flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
+    background-color: $purple;
+    background-image: image-url("45-degree-fabric-dark.png");
   }
-  .task-name {
+
+  .card-right {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
   }
+
+  .card-img-overlay {
+    display: flex;
+    // flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .due-date {
+    align-items: flex-end;
+  }
+
+  .card-icons {
+    cursor: pointer;
+  }
+
+  .card-img {
+    width: 60%;
+    opacity: 0.8;
+    border-radius: 22px 0px 0px 22px;
+    filter: blur(2px);
+    clip-path: polygon(95% 0, 70% 100%, 0% 100%, 0 0%);
+  }
+}
+
+.task-name {
+  height: 100px;
+  width: 200px;
+  position: relative;
+
+}
+
+#title {
+  right: 0;
+  bottom: 0;
+  position: absolute;
+}
+
+.progress {
+
+}
+
+.completed {
+  background-color: $dark-purple;
 }
