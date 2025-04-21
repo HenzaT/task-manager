@@ -1,6 +1,6 @@
-taskr (Task Manager)
+tasku (Task Manager)
 
-Ongoing project to showcase a task manager with simple CRUD functionality. I intend to implement Turbo and JavaScript for a user-friendly experience, as well as integrating OpenAI API. 
+Ongoing project to showcase a task manager with simple CRUD functionality. I intend to implement Turbo and JavaScript for a user-friendly experience. 
 
 Stack:
 > - Ruby on Rails
@@ -10,3 +10,6 @@ Stack:
 > - JavaScript
 > - Stimulus.JS
 > - Turbo
+> - OpenAI API
+> - Cloudinary
+> - Heroku
