@@ -2,30 +2,15 @@
 
 <div class="container home-page">
   <div class="row">
-    <%# <div class="col-4 sort-by justify-content-center text-center"> %>
-      <%#= search_form_for @q do |f| %>
-        <%#= f.label :title_cont %>
-        <%#= f.search_field :title_cont, class: "form-control" %>
-        <%#= link_to "Clear", request.path, class: "btn btn-default" %>
-        <%#= f.submit %>
-      <%# end %>
-      <%# <div class="sorting-buttons">
-      <button class="btn-sort"> %>
-        <%#= sort_link(@q, :title) %>
-      <%# </button>
-      <button class="btn-sort"> %>
-        <%#= sort_link(@q, :due) %>
-      <%# </button>
-      </div>
-    </div> %>
-  </div>
-  <div class="row">
     <div class="col-4 all-tasks border-end border-dark">
       <h2 class="section-head">Tasks in progress...</h2>
+      <div class="search">
+        <%= render "search_form", q: @q_in_progress %>
+      </div>
       <%= turbo_stream_from "tasks" %>
       <div id="tasks-list" class="task-cards">
-        <% if @tasks.length > 0 %>
-          <% @tasks.each do |task| %>
+        <% if @in_progress.length > 0 %>
+          <% @in_progress.each do |task| %>
             <% if task.status == "In Progress" %>
               <div class="card task-card">
                 <%= render "task", task: task %>
@@ -39,15 +24,17 @@
         <% end %>
       </div>
     </div>
+
     <div class="col-4 completed-tasks border-end border-dark">
       <div class="task-cards">
         <h2 class="section-head">Completed tasks...</h2>
+        <div class="search">
+          <%= render "search_form", q: @q_completed %>
+        </div>
         <% @completed.each do |done| %>
-          <% if done.status == "Completed" %>
-            <div class="card task-done-card text-white">
-              <%= render "task", task: done %>
-            </div>
-          <% end %>
+          <div class="card task-done-card text-white">
+            <%= render "task", task: done %>
+          </div>
         <% end %>
       </div>
     </div>

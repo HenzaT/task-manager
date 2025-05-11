@@ -5,18 +5,19 @@ class Task < ApplicationRecord
     set_photo
   end
 
-  def self.ransackable_attributes(auth_object = nil)
-    ["created_at", "description", "due", "id", "id_value", "status", "title", "updated_at"]
-  end
   has_one_attached :photo
   validates :title, :status, :due, presence: true
   validates :status, inclusion: { in: ["Completed", "In Progress"] }
+  scope :in_progress, -> { where(status: "In Progress") }
+  scope :completed, -> { where(status: "Completed") }
 
   after_create_commit -> { broadcast_append_to "tasks", target: "tasks-list" }
 
-  # after_create_commit -> { broadcast_prepend_to "tasks", partial: "tasks/task", locals: { quote: self }, target: "tasks" }
-
   private
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "description", "due", "id", "id_value", "status", "title", "updated_at"]
+  end
 
   def set_photo
     TaskPhotoJob.perform_later(self.id)

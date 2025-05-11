@@ -1,0 +1,14 @@
+<%= search_form_for q do |f| %>
+  <%= f.label :title_cont %>
+  <%= f.search_field :title_cont, class: "form-control" %>
+  <%= link_to "Clear", request.path, class: "btn btn-default" %>
+  <%= f.submit %>
+<% end %>
+<div class="sorting-buttons">
+  <button class="btn-sort">
+    <%= sort_link(q, :title) %>
+  </button>
+  <button class="btn-sort">
+    <%= sort_link(q, :due) %>
+  </button>
+</div>

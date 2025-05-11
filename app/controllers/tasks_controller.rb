@@ -1,9 +1,10 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.where(status: "In Progress")
-    @completed = Task.where(status: "Completed")
-    # @q = Task.ransack(params[:q])
-    # @tasks = @q.result(distinct: true)
+    @q_in_progress = Task.in_progress.ransack(params[:q_in_progress])
+    @in_progress = @q_in_progress.result
+    @q_completed = Task.completed.ransack(params[:q_completed])
+    @completed = @q_completed.result
+    Rails.logger.debug "Params: #{params.inspect}"
   end
 
   def show
