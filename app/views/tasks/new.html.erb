@@ -3,7 +3,7 @@
     <%= simple_form_for @task, data: { turbo_stream: true }, html: { data: { turbo_frame: "individual_task" } } do |f| %>
       <%= f.input :title %>
       <%= f.input :description %>
-      <%= f.input :status, collection: ["Completed", "In Progress"] %>
+      <%= f.input :status, collection: ["In Progress", "Completed"] %>
       <%= f.input :due, as: :string, input_html: { data: { controller: "datepicker" } } %>
       <%= f.button :submit, class: "btn btn-task" %>
     <% end %>

@@ -12,7 +12,7 @@ class Task < ApplicationRecord
   validates :title, :status, :due, presence: true
   validates :status, inclusion: { in: ["Completed", "In Progress"] }
 
-  after_update_commit -> { broadcast_replace_later_to "tasks" }
+  after_create_commit -> { broadcast_append_to "tasks", target: "tasks-list" }
 
   # after_create_commit -> { broadcast_prepend_to "tasks", partial: "tasks/task", locals: { quote: self }, target: "tasks" }
 

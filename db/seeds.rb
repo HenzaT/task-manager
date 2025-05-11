@@ -13,6 +13,6 @@ Task.destroy_all
 puts "Creating tasks..."
 
 Task.create(title: "Coding", description: "Build a task manager app", status: "In Progress", due: Time.now)
-Task.create(title: "Music Practice", description: "Practise the guitar", status: "In Progress", due: Time.now)
+Task.create(title: "Music", description: "Practise the guitar", status: "In Progress", due: Time.now)
 
 puts "Created Tasks!"

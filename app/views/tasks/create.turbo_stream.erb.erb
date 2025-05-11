@@ -1,12 +1,12 @@
-<%= turbo_stream.append "tasks" do %>
+<%= turbo_stream.append "tasks-list" do %>
   <%= render "task", task: @task %>
 <% end %>
 
-<turbo-stream action="append" target="modals">
+<%# <turbo-stream action="append" target="modals">
   <template>
     <script>
       const modal = bootstrap.Modal.getInstance(document.getElementById("newTaskModal"));
       if (modal) modal.hide();
     </script>
   </template>
-</turbo-stream>
+</turbo-stream> %>

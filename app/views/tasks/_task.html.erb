@@ -1,11 +1,17 @@
-<div id="<%= dom_id(task) %>" class="card task-card" data-card-toggle-target="card">
+<div id="<%= dom_id(task) %>">
   <div class="card-front">
-    <%= cl_image_tag task.photo.key, class: "card-img", alt: "AI-generated image of the task" if task.photo.attached? %>
+    <div class="image">
+      <% if task.photo.attached? %>
+        <%= cl_image_tag(task.photo.key, class: "card-img", alt: "AI-generated image of the task") %>
+      <% else %>
+        <%= "loading image" %>
+      <% end %>
+    </div>
     <div class="card-img-overlay">
       <div class="card-icons">
-        <i class=" fa-solid fa-pen-to-square" data-bs-toggle="modal" data-bs-target="#updateModal-<%= task.id %>"></i>
+        <i class="icon fa-solid fa-pen-to-square fa-xl text-dark" data-bs-toggle="modal" data-bs-target="#updateModal-<%= task.id %>"></i>
         <%= link_to task_path(task), class: "text-dark", data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} do %>
-          <i class="fa-solid fa-trash"></i>
+          <i class="icon fa-solid fa-trash fa-xl"></i>
         <% end %>
       </div>
       <div class="card-right">
@@ -16,7 +22,6 @@
                   {
                     checked: task.status == 'Completed',
                     onchange: 'this.form.submit();',
-                    data: { action: "click->card-toggle#toggleColor" }
                   },
                     "Completed",
                     "In Progress" %>
@@ -35,7 +40,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <%= turbo_frame_tag "modal_task_form_#{task.id}" do %>
-          <%= render "form", task: task %>
+          <%= render "tasks/form", task: task %>
         <% end %>
       </div>
     </div>

@@ -7,9 +7,10 @@ class TaskPhotoJob < ApplicationJob
     task = Task.find(task_id)
 
     client = OpenAI::Client.new
-    response = client.images.generate(parameters:{
-        prompt: "An image of #{task.title} or #{task.description}",
-        size: "256x256"
+    response = client.images.generate(parameters: {
+      model: "dall-e-2",
+      prompt: "An image of #{task.title}",
+      size: "256x256"
     })
 
     url = response["data"][0]["url"]
