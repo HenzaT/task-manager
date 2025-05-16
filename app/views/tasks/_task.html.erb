@@ -1,5 +1,6 @@
 <div id="<%= dom_id(task) %>">
   <div class="card-front">
+    <%= turbo_stream_from "task_channel" %>
     <div class="image">
       <% if task.photo.attached? %>
         <%= cl_image_tag(task.photo.key, class: "card-img", alt: "AI-generated image of the task") %>

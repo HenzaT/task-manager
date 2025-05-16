@@ -17,6 +17,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+    TaskPhotoJob.perform_later(@task.id)
 
     respond_to do |format|
       if @task.save
